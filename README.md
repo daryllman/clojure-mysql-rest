@@ -5,11 +5,34 @@ Clojure App to serve a MySQL database through RESTful APIs.
 ## Clojure libraries used
 
 - [Ring](https://github.com/ring-clojure/ring) - HTTP Webserver
+
+```
+[ring "1.8.2"]
+```
+
 - [Compojure](https://github.com/weavejester/compojure) - Handle RESTful routing for Ring
-- [Compojure](https://github.com/weavejester/compojure) - Handle RESTful routing for Ring
+
+```
+[compojure "1.6.2"]
+```
+
 - [Clojure java.jdbc](https://github.com/clojure/java.jdbc) - A low-level Clojure wrapper for JDBC-based access to databases
+
+```
+[org.clojure/java.jdbc "0.7.11"]
+```
+
 - [next-jdbc](https://github.com/seancorfield/next-jdbc) - The next generation of clojure.java.jdbc: a new low-level Clojure wrapper for JDBC-based access to databases.
+
+```
+[seancorfield/next.jdbc "1.1.610"]
+```
+
 - [Clojure Data](https://github.com/clojure/data.json) - Clojure's JSON library - convert data types - to & from JSON
+
+```
+[org.clojure/data.json "1.0.0"]
+```
 
 ## Usage
 
