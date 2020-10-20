@@ -10,7 +10,7 @@ Clojure App to serve a MySQL database through RESTful APIs.
 [ring "1.8.2"]
 ```
 
-- [Compojure](https://github.com/weavejester/compojure) - Handle RESTful routing for Ring
+- [Compojure](https://github.com/weavejester/compojure) - Handle RESTful routing for Ring - Handles URL path, and method switching
 
 ```
 [compojure "1.6.2"]
