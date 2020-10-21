@@ -1,6 +1,9 @@
 (ns clojure-rest-mysql.reviews.handler
   (:require [clojure-rest-mysql.reviews.model :refer [read-all-reviews
-                                                      create-review]]))
+                                                      create-review
+                                                      read-a-review]]
+            [ring.util.response :refer [response]]
+            [clojure.data.json :as json]))
 
 
 ; asin char (10)
@@ -19,7 +22,19 @@
         reviews (read-all-reviews ds)]
     {:status 200
      :headers {}
-     :body (str reviews)}))
+    ;  :body (str reviews)}))
+     :body (list (json/write-str (response reviews)))}))
+
+(defn handle-a-review [req]
+  (let [ds (:clojure-rest-mysql/ds req)
+        asin (get-in req [:params "asin"])
+        reviewerID (get-in req [:params "reviewerID"])
+        unixReviewTime (get-in req [:params "unixReviewTime"])
+        selected-review (read-a-review ds asin reviewerID unixReviewTime)]
+    {:status 200
+     :headers {}
+    ;  :body (str reviews)}))
+     :body (list (json/write-str (response selected-review)))}))
 
 
 (defn handle-create-review [req]
@@ -33,10 +48,11 @@
         reviewerName (get-in req [:params "reviewerName"])
         summary (get-in req [:params "summary"])
         unixReviewTime (get-in req [:params "unixReviewTime"])
-        ; review-asin (create-review ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime)
+        ; review-asin (create-review ds asin, helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime)
         ]
     (create-review ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime)
-    {:status 302
-     :headers {"Location" "/reviews"} ;redirect back to /reviews
+    {:status 200
+    ;  :headers {"Location" "/reviews"} ;redirect back to /reviews
     ;  :body (str "Successfully inserted a review into " review-asin)
-     :body "Successfully inserted a review"}))
+     :body (str "Successfully inserted a review on book asin" "(" asin ")" " from reviewerID" "(" reviewerID ")")}))
+
