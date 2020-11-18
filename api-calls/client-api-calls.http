@@ -1,0 +1,23 @@
+// Variables
+@hostname = http://localhost
+@port = 8000
+
+###
+// Root
+GET {{hostname}}:{{port}} HTTP/1.1
+
+###
+// To retrieve all reviews
+GET {{hostname}}:{{port}}/reviews HTTP/1.1
+
+###
+
+POST https://example.com/comments HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+###
