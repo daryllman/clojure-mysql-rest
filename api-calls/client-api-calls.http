@@ -3,21 +3,40 @@
 @port = 8000
 
 ###
-// Root
+// Root - returns available api calls
 GET {{hostname}}:{{port}} HTTP/1.1
 
 ###
-// To retrieve all reviews
-GET {{hostname}}:{{port}}/reviews HTTP/1.1
-
-###
-
-POST https://example.com/comments HTTP/1.1
+// READ - To retrieve all reviews of a particular book
+POST {{hostname}}:{{port}}/api/get_reviews HTTP/1.1
 content-type: application/json
-
 {
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+    "asin": "B000F83SZQ",
 }
 
+###
+// CREATE - add a review to a particular book
+POST {{hostname}}:{{port}}/api/create_review HTTP/1.1
+content-type: application/json
+{
+    "asin": "B0001234ZZ",
+    "helpful": "[2, 9]",
+    "overall": "5",
+    "reviewText": "I love this book because its interesting",
+    "reviewTime": "11 11, 2020",
+    "reviewerID": "A1234567890000",
+    "reviewerName": "Daryll Wong",
+    "summary": "Best book",
+    "unixReviewTime": "1399038400",
+}
+###
+###
+// DELETE - remove a review to a particular book
+POST {{hostname}}:{{port}}/api/delete_review HTTP/1.1
+content-type: application/json
+{
+    "asin": "B0001234ZZ",
+    "reviewerID": "A1234567890000",
+    "unixReviewTime": "1399038400",
+}
 ###
