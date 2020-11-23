@@ -36,27 +36,29 @@
                      "B000GFK7L6" "[3, 4]" "3" "cool stuff" "11 3, 2009" "A3GXR6CHHPX0JS" "Zach green" "cool stuff summary" "1257206400"]))
 
 ; Create 'reviews' Table
-(defn create-table [ds]
+(defn create-table [ds] ;change to drop table if exists;
   (jdbc/execute! ds ["
                       CREATE TABLE IF NOT EXISTS reviews (
-                      asin char(10),
-                      helpful varchar(10),
-                      overall integer(1),
-                      reviewText text(1000),
-                      reviewTime varchar(11),
-                      reviewerID varchar(14),
-                      reviewerName varchar(64),
-                      summary varchar(255),
-                      unixReviewTime integer(10)
+                      asin char(10) DEFAULT NULL,
+                      helpful varchar(10) DEFAULT NULL,
+                      overall integer(1) DEFAULT NULL,
+                      reviewText text(1000) DEFAULT NULL,
+                      reviewTime varchar(11) DEFAULT NULL,
+                      reviewerID varchar(14) DEFAULT NULL,
+                      reviewerName varchar(64) DEFAULT NULL,
+                      summary varchar(255) DEFAULT NULL,
+                      unixReviewTime integer(10) DEFAULT NULL,
+                      PRIMARY KEY(asin, reviewerID, unixReviewTime)
                       )"])
-  (load-sample-data ds))
-
-
+  (println "Created Reviews Table")
+  (load-sample-data ds)
+  (println "Loaded some sample data"))
 
 
 
 ; Insert
 (defn create-review [ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]
+  (println "Inserting a row")
   (jdbc/execute!
    ds
    ["INSERT INTO reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime)
@@ -67,4 +69,11 @@
 
 ; Read All - wont really be used. Just for testing purpose
 (defn read-all-reviews [ds]
+  (println "Reading all reviews")
   (jdbc/execute! ds ["SELECT * from reviews"]))
+
+
+; Read a review
+(defn read-a-review [ds asin reviewerID unixReviewTime]
+  (println "Reading a reviews")
+  (jdbc/execute! ds ["SELECT * from reviews WHERE asin=? AND reviewerID=? AND unixReviewTime=?" asin reviewerID  unixReviewTime]))
