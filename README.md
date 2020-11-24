@@ -38,8 +38,8 @@ Clojure App to serve a MySQL database through RESTful APIs.
 
 - Download the [data](https://istd50043.github.io/project) (.csv to be loaded into a mysql db) and save under /resources folder
 - Add the library dependencies into `project.clj` file - should already be there
-- `lein run 8000` to run at port 8000
-- Test the REST APIs
+- `lein run 8000` to run at port 8000 (or other specified port)
+- Test the REST APIs - the sample api calls are in /api-calls folder
 
 ## License
 
