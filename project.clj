@@ -5,6 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.2"]
+                 [ring/ring-json "0.5.0"]
                  [compojure "1.6.2"]
                  [org.clojure/java.jdbc "0.7.11"]
                  [seancorfield/next.jdbc "1.1.610"]
