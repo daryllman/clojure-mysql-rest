@@ -17,44 +17,48 @@
 ; - READ all reviews
 ; - READ reviews of a specified book
 ; - CREATE a review for a specified book
-; - Update the (written) review for a specified book
 ; - DELETE a (written) review for a specified book - user can only delete its own review
 
-(def db {:dbtype "mysql" :dbname "kindle-reviews"})
-(def ds (jdbc/get-datasource db))
 
 
-; Load data into mysql from csv
-
-
-; Insert sample data
+; Insert sample data (NOT USED)
 (defn load-sample-data [ds]
   (jdbc/execute! ds ["INSERT INTO reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime)
                       VALUES (?,?,?,?,?,?,?,?,?), (?,?,?,?,?,?,?,?,?), (?,?,?,?,?,?,?,?,?)"
                      "B000F83SZQ" "[0, 0]" "5" "I enjoy vintage books and movies" "04 21, 2014" "A1F6404F1VG29J" "jack brown" "I enjoy vintage books and movies summary" "1398038400"
                      "B000FDJ0FS" "[2, 9]" "3" "I love this grape" "02 16, 2014" "A1CQ8WG6CUDBNV" "danny cake" "I love this grape summary" "1392508800"
-                     "B000GFK7L6" "[3, 4]" "3" "cool stuff" "11 3, 2009" "A3GXR6CHHPX0JS" "Zach green" "cool stuff summary" "1257206400"]))
+                     "B000GFK7L6" "[3, 4]" "3" "cool stuff" "11 3, 2009" "A3GXR6CHHPX0JS" "Zach green" "cool stuff summary" "1257206400"])
+  (println "Loaded some sample data"))
+
 
 ; Create 'reviews' Table
 (defn create-table [ds] ;change to drop table if exists;
   (jdbc/execute! ds ["
                       CREATE TABLE IF NOT EXISTS reviews (
-                      asin char(10) DEFAULT NULL,
+                      asin char(10),
                       helpful varchar(10) DEFAULT NULL,
                       overall integer(1) DEFAULT NULL,
-                      reviewText text(1000) DEFAULT NULL,
-                      reviewTime varchar(11) DEFAULT NULL,
-                      reviewerID varchar(14) DEFAULT NULL,
-                      reviewerName varchar(64) DEFAULT NULL,
+                      reviewText text(1000),
+                      reviewTime varchar(11),
+                      reviewerID varchar(14),
+                      reviewerName varchar(64),
                       summary varchar(255) DEFAULT NULL,
-                      unixReviewTime integer(10) DEFAULT NULL,
+                      unixReviewTime integer(10),
                       PRIMARY KEY(asin, reviewerID, unixReviewTime)
                       )"])
   (println "Created Reviews Table")
-  (load-sample-data ds)
-  (println "Loaded some sample data"))
+  ;(load-sample-data ds)
+  )
 
+; Read All - wont really be used. Just for testing purpose
+(defn read-all-reviews [ds]
+  (println "Reading all reviews")
+  (jdbc/execute! ds ["SELECT * from reviews"]))
 
+; Read a review
+(defn read-reviews [ds asin]
+  (println (str "Reading reviews from " "asin(" asin ")"))
+  (jdbc/execute! ds ["SELECT * from reviews WHERE asin=?" asin]))
 
 ; Insert
 (defn create-review [ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]
@@ -65,15 +69,7 @@
                 VALUES (?,?,?,?,?,?,?,?,?)"
     asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]))
 
-
-
-; Read All - wont really be used. Just for testing purpose
-(defn read-all-reviews [ds]
-  (println "Reading all reviews")
-  (jdbc/execute! ds ["SELECT * from reviews"]))
-
-
-; Read a review
-(defn read-a-review [ds asin reviewerID unixReviewTime]
-  (println "Reading a reviews")
-  (jdbc/execute! ds ["SELECT * from reviews WHERE asin=? AND reviewerID=? AND unixReviewTime=?" asin reviewerID  unixReviewTime]))
+; Delete a review
+(defn delete-a-review [ds asin reviewerID unixReviewTime]
+  (println (str "Deleting a review from " "asin(" asin "), " "reviewerID(" reviewerID "), " "unixReviewTime(" unixReviewTime ")"))
+  (jdbc/execute! ds ["DELETE from reviews WHERE asin=? AND reviewerID=? AND unixReviewTime=?" asin reviewerID  unixReviewTime]))
