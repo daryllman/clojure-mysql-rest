@@ -14,3 +14,6 @@ sudo mysql -e 'create user "root"@"%" identified by ""'
 sudo mysql -e 'grant all privileges on *.* to "root"@"%" with grant option'
 sudo mysql -e 'flush privileges'
 sudo service mysql restart
+
+sudo mysql -e 'create database `kindle-reviews`'
+sudo mysql -u root "kindle-reviews" < "dbsetup.sql"
