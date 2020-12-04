@@ -34,6 +34,7 @@
 (defn create-table [ds] ;change to drop table if exists;
   (jdbc/execute! ds ["
                       CREATE TABLE IF NOT EXISTS reviews (
+                      id int(11) NOT NULL AUTO_INCREMENT,
                       asin char(10),
                       helpful varchar(10) DEFAULT NULL,
                       overall integer(1) DEFAULT NULL,
@@ -54,10 +55,10 @@
   (println "Reading all reviews")
   (jdbc/execute! ds ["SELECT * from reviews"]))
 ;___________________________________________________________________________________
-; Read a review
-(defn read-reviews [ds asin]
+; Read reviews from a book
+(defn read-reviews [ds asin max]
   (println (str "Reading reviews from " "asin(" asin ")"))
-  (jdbc/execute! ds ["SELECT * from reviews WHERE asin=?" asin]))
+  (jdbc/execute! ds ["SELECT * from reviews WHERE asin=? limit ?" asin max]))
 ;___________________________________________________________________________________
 ; Insert
 (defn create-review [ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]
