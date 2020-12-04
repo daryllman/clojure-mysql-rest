@@ -20,7 +20,7 @@
 ; - DELETE a (written) review for a specified book - user can only delete its own review
 
 
-
+;___________________________________________________________________________________
 ; Insert sample data (NOT USED)
 (defn load-sample-data [ds]
   (jdbc/execute! ds ["INSERT INTO reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime)
@@ -29,8 +29,7 @@
                      "B000FDJ0FS" "[2, 9]" "3" "I love this grape" "02 16, 2014" "A1CQ8WG6CUDBNV" "danny cake" "I love this grape summary" "1392508800"
                      "B000GFK7L6" "[3, 4]" "3" "cool stuff" "11 3, 2009" "A3GXR6CHHPX0JS" "Zach green" "cool stuff summary" "1257206400"])
   (println "Loaded some sample data"))
-
-
+;___________________________________________________________________________________
 ; Create 'reviews' Table
 (defn create-table [ds] ;change to drop table if exists;
   (jdbc/execute! ds ["
@@ -49,17 +48,17 @@
   (println "Created Reviews Table")
   ;(load-sample-data ds)
   )
-
+;___________________________________________________________________________________
 ; Read All - wont really be used. Just for testing purpose
 (defn read-all-reviews [ds]
   (println "Reading all reviews")
   (jdbc/execute! ds ["SELECT * from reviews"]))
-
+;___________________________________________________________________________________
 ; Read a review
 (defn read-reviews [ds asin]
   (println (str "Reading reviews from " "asin(" asin ")"))
   (jdbc/execute! ds ["SELECT * from reviews WHERE asin=?" asin]))
-
+;___________________________________________________________________________________
 ; Insert
 (defn create-review [ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]
   (println "Inserting a row")
@@ -68,7 +67,7 @@
    ["INSERT INTO reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime)
                 VALUES (?,?,?,?,?,?,?,?,?)"
     asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]))
-
+;___________________________________________________________________________________
 ; Delete a review
 (defn delete-a-review [ds asin reviewerID unixReviewTime]
   (println (str "Deleting a review from " "asin(" asin "), " "reviewerID(" reviewerID "), " "unixReviewTime(" unixReviewTime ")"))
