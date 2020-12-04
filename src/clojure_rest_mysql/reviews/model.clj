@@ -34,7 +34,7 @@
 (defn create-table [ds] ;change to drop table if exists;
   (jdbc/execute! ds ["
                       CREATE TABLE IF NOT EXISTS reviews (
-                      id int(11) NOT NULL AUTO_INCREMENT,
+                      id int(11),
                       asin char(10),
                       helpful varchar(10) DEFAULT NULL,
                       overall integer(1) DEFAULT NULL,

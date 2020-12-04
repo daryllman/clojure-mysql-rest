@@ -82,9 +82,9 @@
   (wrap-server (wrap-db (wrap-json-params routes))))
 
 (defn -main [port]
-  (reviews/create-table ds)
+  ;(reviews/create-table ds)
   (jetty/run-jetty app {:port (Integer. port)}))
 
 (defn -dev-main [port]
-  (reviews/create-table ds)
+  ;(reviews/create-table ds)
   (jetty/run-jetty (wrap-reload #'app) {:port (Integer. port)}))
