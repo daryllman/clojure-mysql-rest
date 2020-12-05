@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS reviews (
     PRIMARY KEY(asin, reviewerID, unixReviewTime)
     );
 
-LOAD DATA LOCAL INFILE 'kindle_reviews.csv' INTO TABLE kindle_reviews
+LOAD DATA LOCAL INFILE 'kindle_reviews.csv' INTO TABLE reviews
 	FIELDS TERMINATED BY ','
 	ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
