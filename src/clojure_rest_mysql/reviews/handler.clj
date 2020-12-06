@@ -30,9 +30,9 @@
 (defn handle-reviews [req]
   (let [ds (:clojure-rest-mysql/ds req)
         asin (get-in req [:params "asin"])
-        max (get-in req [:params "max"])
-        selected-reviews (read-reviews ds asin max)]
-    {:body (list (json/write-str (response selected-reviews)))}))
+        ;max (get-in req [:params "max"])
+        selected-reviews (read-reviews ds asin)]
+    {:body (json/write-str (response selected-reviews))}))
 
 (defn handle-delete-review [req]
   (let [ds (:clojure-rest-mysql/ds req)
