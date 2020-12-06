@@ -70,7 +70,8 @@
    ds
    ["INSERT INTO reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime)
                 VALUES (?,?,?,?,?,?,?,?,?)"
-    asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]))
+    asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime])
+  (nth (jdbc/execute! ds ["SELECT * from reviews WHERE asin=? AND reviewerID=? AND unixReviewTime=?" asin reviewerID  unixReviewTime]) 0))
 ;___________________________________________________________________________________
 ; Delete a review
 (defn delete-a-review [ds asin reviewerID unixReviewTime]

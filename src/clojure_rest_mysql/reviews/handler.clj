@@ -53,7 +53,8 @@
         reviewerID (get-in req [:params "reviewerID"])
         reviewerName (get-in req [:params "reviewerName"])
         summary (get-in req [:params "summary"])
-        unixReviewTime (get-in req [:params "unixReviewTime"])]
-    (create-review ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime)
-    {:body (str "Successfully inserted a review on book asin" "(" asin ")" " from reviewerID" "(" reviewerID ")")}))
+        unixReviewTime (get-in req [:params "unixReviewTime"])
+        createdReview (create-review ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime)]
+
+    {:body (json/write-str (response createdReview))}))
 
