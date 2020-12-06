@@ -16,7 +16,7 @@
             [next.jdbc :as jdbc]))
 
 ; Initialise database -> datasource
-(def db {:dbtype "mysql" :dbname "kindle-reviews" :user "root" :password "1234" :serverTimezone "UTC"})
+(def db {:dbtype "mysql" :dbname "kindle-reviews" :user "root" :password "" :serverTimezone "UTC"})
 (def ds (jdbc/get-datasource db))
 
 
