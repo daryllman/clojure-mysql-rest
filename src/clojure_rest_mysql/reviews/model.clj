@@ -61,7 +61,7 @@
   (let [reviewsList (jdbc/execute! ds ["SELECT * from reviews WHERE asin=?" asin])
         avgOverall ((nth (jdbc/execute! ds ["SELECT AVG(overall) as average from reviews WHERE asin=?" asin]) 0) :average)
         totalCount ((nth (jdbc/execute! ds ["SELECT COUNT(*) as count from reviews WHERE asin=?" asin]) 0) :count)]
-    (hash-map :average avgOverall :total totalCount :reviewsList reviewsList)))
+    (hash-map :average (or avgOverall 0) :total totalCount :reviewsList reviewsList)))
 ;___________________________________________________________________________________
 ; Insert
 (defn create-review [ds asin helpful overall reviewText reviewTime reviewerID reviewerName summary unixReviewTime]
